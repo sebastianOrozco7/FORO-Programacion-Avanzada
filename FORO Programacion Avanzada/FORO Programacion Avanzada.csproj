@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <RootNamespace>FORO_Programacion_Avanzada</RootNamespace>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="bin\Debug\net8.0-windows\Archivo\" />
+    <Folder Include="Forms\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="bin\debug\net8.0-windows\archivo\Estudiantes.csv" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DataSerializers\DataSerializers.csproj" />
+  </ItemGroup>
+
+</Project>
