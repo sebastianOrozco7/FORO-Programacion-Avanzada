@@ -187,5 +187,67 @@ namespace FORO_Programacion_Avanzada
         {
             LimpiarFormulario();
         }
+
+        private void btnEditar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (ValidarDatos())
+                {
+                    Estudiante estudianteEditado = new Estudiante
+                    {
+                        IdEstudiante = int.Parse(txbCedula.Text),
+                        Nombre = txbNombre.Text,
+                        Edad = int.Parse(txbEdad.Text),
+                        Nota1 = double.Parse(txbNota1.Text),
+                        Nota2 = double.Parse(txbNota2.Text),
+                        Nota3 = double.Parse(txbNota3.Text),
+                        Genero = rbMasculino.Checked ? "Masculino" : "Femenino"
+                    };
+
+                    estudianteRepository.editarEstudiante(estudianteEditado, estudianteEditado.IdEstudiante);
+
+                    actividadRepository.EliminarEstudianteActividad(estudianteEditado.IdEstudiante);
+
+                    foreach (Actividades_Extracurriculares actividad in chlActividades.CheckedItems)
+                    {
+                        int idActividad = actividad.IdActividad;
+
+                        actividadRepository.RegistrarEstudianteActividad(estudianteEditado.IdEstudiante, idActividad);
+                    }
+
+
+                    MessageBox.Show("Edicion completa: ", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    CargarDatos();
+                    LimpiarFormulario();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al editar: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+        }
+
+        private void btnEliminar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int IdEstudiante = int.Parse(txbCedula.Text);
+
+                estudianteRepository.EliminarEstudiante(IdEstudiante);
+
+                CargarDatos();
+                LimpiarFormulario();
+            }
+            catch(Exception ex)
+            {
+
+                MessageBox.Show("Error al eliminar estudiante: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+           
+        }
     }
 }

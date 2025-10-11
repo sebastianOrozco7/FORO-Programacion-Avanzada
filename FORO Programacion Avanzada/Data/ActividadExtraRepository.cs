@@ -85,8 +85,21 @@ namespace FORO_Programacion_Avanzada.Data
                     }
                 }
             }
+        }
 
+        public void EliminarEstudianteActividad(int IdEstudiante)
+        {
+            string QueryEliminar = "DELETE FROM EstudianteActividad Where IdEstudiante = @IdEstudiante";
 
+            using (MySqlConnection conexion = new Conexion().GetConnection())
+            {
+                conexion.Open();
+                using(MySqlCommand cmdEliminar = new MySqlCommand(QueryEliminar, conexion))
+                {
+                    cmdEliminar.Parameters.AddWithValue("@IdEstudiante",IdEstudiante);
+                    cmdEliminar.ExecuteNonQuery();
+                }
+            }
         }
     }
 }

@@ -57,6 +57,8 @@
             txbCedula = new TextBox();
             label11 = new Label();
             dtgvEstudianteActividad = new DataGridView();
+            btnEditar = new Button();
+            btnEliminar = new Button();
             ((System.ComponentModel.ISupportInitialize)dtgvEstudiantes).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pbImagen).BeginInit();
             menuStrip1.SuspendLayout();
@@ -185,7 +187,7 @@
             // 
             // btnRegistrar
             // 
-            btnRegistrar.Location = new Point(268, 399);
+            btnRegistrar.Location = new Point(48, 470);
             btnRegistrar.Name = "btnRegistrar";
             btnRegistrar.Size = new Size(75, 23);
             btnRegistrar.TabIndex = 17;
@@ -273,7 +275,7 @@
             // 
             // btnLimpiar
             // 
-            btnLimpiar.Location = new Point(268, 428);
+            btnLimpiar.Location = new Point(129, 470);
             btnLimpiar.Name = "btnLimpiar";
             btnLimpiar.Size = new Size(75, 23);
             btnLimpiar.TabIndex = 29;
@@ -286,7 +288,7 @@
             chlActividades.FormattingEnabled = true;
             chlActividades.Location = new Point(48, 370);
             chlActividades.Name = "chlActividades";
-            chlActividades.Size = new Size(120, 94);
+            chlActividades.Size = new Size(120, 76);
             chlActividades.TabIndex = 30;
             // 
             // txbCedula
@@ -313,11 +315,33 @@
             dtgvEstudianteActividad.Size = new Size(252, 117);
             dtgvEstudianteActividad.TabIndex = 33;
             // 
+            // btnEditar
+            // 
+            btnEditar.Location = new Point(210, 470);
+            btnEditar.Name = "btnEditar";
+            btnEditar.Size = new Size(75, 23);
+            btnEditar.TabIndex = 34;
+            btnEditar.Text = "Editar";
+            btnEditar.UseVisualStyleBackColor = true;
+            btnEditar.Click += btnEditar_Click;
+            // 
+            // btnEliminar
+            // 
+            btnEliminar.Location = new Point(592, 470);
+            btnEliminar.Name = "btnEliminar";
+            btnEliminar.Size = new Size(75, 23);
+            btnEliminar.TabIndex = 35;
+            btnEliminar.Text = "button1";
+            btnEliminar.UseVisualStyleBackColor = true;
+            btnEliminar.Click += btnEliminar_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(860, 504);
+            ClientSize = new Size(860, 532);
+            Controls.Add(btnEliminar);
+            Controls.Add(btnEditar);
             Controls.Add(dtgvEstudianteActividad);
             Controls.Add(label11);
             Controls.Add(txbCedula);
@@ -389,5 +413,7 @@
         private TextBox txbCedula;
         private Label label11;
         private DataGridView dtgvEstudianteActividad;
+        private Button btnEditar;
+        private Button btnEliminar;
     }
 }

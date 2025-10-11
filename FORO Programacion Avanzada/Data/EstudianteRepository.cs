@@ -72,5 +72,49 @@ namespace FORO_Programacion_Avanzada.Data
 
             return lista;
         }
+
+        public void editarEstudiante(Estudiante estudiante, int Id)
+        {
+            string Query = "UPDATE Estudiante SET Nombre = @Nombre, Genero = @Genero, Edad = @Edad," +
+                            "Nota1 = @Nota1, Nota2 = @Nota2, Nota3 = @Nota3 WHERE IdEstudiante = @IdEstudiante";
+
+            using(MySqlConnection conexion = new Conexion().GetConnection())
+            {
+                conexion.Open();
+                
+                using(MySqlCommand cmd = new MySqlCommand(Query, conexion))
+                {
+                    cmd.Parameters.AddWithValue("@Nombre", estudiante.Nombre);
+                    cmd.Parameters.AddWithValue("@Genero", estudiante.Genero);
+                    cmd.Parameters.AddWithValue("@Edad",estudiante.Edad);
+                    cmd.Parameters.AddWithValue("@Nota1",estudiante.Nota1);
+                    cmd.Parameters.AddWithValue("@Nota2",estudiante.Nota2);
+                    cmd.Parameters.AddWithValue("@Nota3",estudiante.Nota3);
+                    cmd.Parameters.AddWithValue("@IdEstudiante",estudiante.IdEstudiante);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void EliminarEstudiante(int IdEstudiante)
+        {
+            string Query = "DELETE FROM Estudiante WHERE IdEstudiante = @IdEstudiante";
+
+            //primero necesitamos eliminar la relacion porque si no nos dara error asi que llamamos el metodo que borra EstudianteActividad
+            ActividadExtraRepository actividadExtra = new ActividadExtraRepository();
+            actividadExtra.EliminarEstudianteActividad(IdEstudiante);
+
+            using(MySqlConnection conexion = new Conexion().GetConnection())
+            {
+                conexion.Open();
+
+                using(MySqlCommand cmd = new MySqlCommand(Query, conexion))
+                {
+                    cmd.Parameters.AddWithValue("@IdEstudiante", IdEstudiante);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
     }
 }
