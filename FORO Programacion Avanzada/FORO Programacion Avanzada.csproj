@@ -11,11 +11,14 @@
 
   <ItemGroup>
     <Folder Include="bin\Debug\net8.0-windows\Archivo\" />
-    <Folder Include="Forms\" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="bin\debug\net8.0-windows\archivo\Estudiantes.csv" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MySql.Data" Version="9.4.0" />
   </ItemGroup>
 
   <ItemGroup>

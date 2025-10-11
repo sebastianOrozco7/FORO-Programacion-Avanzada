@@ -69,6 +69,7 @@
             Controls.Add(btnEnviar);
             Name = "Correo";
             Text = "Correo";
+            Load += Correo_Load;
             ResumeLayout(false);
             PerformLayout();
         }

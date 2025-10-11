@@ -12,6 +12,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DataSerializers;
+using FORO_Programacion_Avanzada.Modelos;
 
 namespace FORO_Programacion_Avanzada
 {
@@ -74,8 +75,7 @@ namespace FORO_Programacion_Avanzada
                             $"Nota1: {estudianteSeleccionado.Nota1}\n" +
                             $"Nota2: {estudianteSeleccionado.Nota2}\n" +
                             $"Nota3: {estudianteSeleccionado.Nota3}\n" +
-                            $"Género: {estudianteSeleccionado.Genero}\n" +
-                            $"Actividad: {estudianteSeleccionado.Actividades}";
+                            $"Género: {estudianteSeleccionado.Genero}\n";
 
 
                 // Configurar y enviar correo
@@ -91,6 +91,11 @@ namespace FORO_Programacion_Avanzada
             {
                 MessageBox.Show("Error al enviar correo: " + ex.Message);
             }
+        }
+
+        private void Correo_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

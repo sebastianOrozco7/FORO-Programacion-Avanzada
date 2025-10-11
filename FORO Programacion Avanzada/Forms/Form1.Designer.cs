@@ -42,9 +42,6 @@
             rbMasculino = new RadioButton();
             rbFemenino = new RadioButton();
             label7 = new Label();
-            cbDeportes = new CheckBox();
-            cbMusica = new CheckBox();
-            cbArte = new CheckBox();
             btnRegistrar = new Button();
             dtgvEstudiantes = new DataGridView();
             pbImagen = new PictureBox();
@@ -53,18 +50,23 @@
             label10 = new Label();
             lbPromedio = new Label();
             lbEstado = new Label();
-            lstEstudiantes = new ListBox();
             menuStrip1 = new MenuStrip();
             cORREOToolStripMenuItem = new ToolStripMenuItem();
+            btnLimpiar = new Button();
+            chlActividades = new CheckedListBox();
+            txbCedula = new TextBox();
+            label11 = new Label();
+            dtgvEstudianteActividad = new DataGridView();
             ((System.ComponentModel.ISupportInitialize)dtgvEstudiantes).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pbImagen).BeginInit();
             menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dtgvEstudianteActividad).BeginInit();
             SuspendLayout();
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(37, 58);
+            label1.Location = new Point(37, 35);
             label1.Name = "label1";
             label1.Size = new Size(117, 15);
             label1.TabIndex = 0;
@@ -181,39 +183,9 @@
             label7.TabIndex = 13;
             label7.Text = "Genero";
             // 
-            // cbDeportes
-            // 
-            cbDeportes.AutoSize = true;
-            cbDeportes.Location = new Point(37, 380);
-            cbDeportes.Name = "cbDeportes";
-            cbDeportes.Size = new Size(73, 19);
-            cbDeportes.TabIndex = 14;
-            cbDeportes.Text = "Deportes";
-            cbDeportes.UseVisualStyleBackColor = true;
-            // 
-            // cbMusica
-            // 
-            cbMusica.AutoSize = true;
-            cbMusica.Location = new Point(116, 380);
-            cbMusica.Name = "cbMusica";
-            cbMusica.Size = new Size(64, 19);
-            cbMusica.TabIndex = 15;
-            cbMusica.Text = "Musica";
-            cbMusica.UseVisualStyleBackColor = true;
-            // 
-            // cbArte
-            // 
-            cbArte.AutoSize = true;
-            cbArte.Location = new Point(186, 380);
-            cbArte.Name = "cbArte";
-            cbArte.Size = new Size(48, 19);
-            cbArte.TabIndex = 16;
-            cbArte.Text = "Arte";
-            cbArte.UseVisualStyleBackColor = true;
-            // 
             // btnRegistrar
             // 
-            btnRegistrar.Location = new Point(106, 449);
+            btnRegistrar.Location = new Point(268, 399);
             btnRegistrar.Name = "btnRegistrar";
             btnRegistrar.Size = new Size(75, 23);
             btnRegistrar.TabIndex = 17;
@@ -283,21 +255,12 @@
             lbEstado.TabIndex = 26;
             lbEstado.Text = "....";
             // 
-            // lstEstudiantes
-            // 
-            lstEstudiantes.FormattingEnabled = true;
-            lstEstudiantes.ItemHeight = 15;
-            lstEstudiantes.Location = new Point(513, 285);
-            lstEstudiantes.Name = "lstEstudiantes";
-            lstEstudiantes.Size = new Size(120, 94);
-            lstEstudiantes.TabIndex = 27;
-            // 
             // menuStrip1
             // 
             menuStrip1.Items.AddRange(new ToolStripItem[] { cORREOToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(800, 24);
+            menuStrip1.Size = new Size(860, 24);
             menuStrip1.TabIndex = 28;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -308,12 +271,58 @@
             cORREOToolStripMenuItem.Text = "CORREO";
             cORREOToolStripMenuItem.Click += cORREOToolStripMenuItem_Click;
             // 
+            // btnLimpiar
+            // 
+            btnLimpiar.Location = new Point(268, 428);
+            btnLimpiar.Name = "btnLimpiar";
+            btnLimpiar.Size = new Size(75, 23);
+            btnLimpiar.TabIndex = 29;
+            btnLimpiar.Text = "Limpiar";
+            btnLimpiar.UseVisualStyleBackColor = true;
+            btnLimpiar.Click += btnLimpiar_Click;
+            // 
+            // chlActividades
+            // 
+            chlActividades.FormattingEnabled = true;
+            chlActividades.Location = new Point(48, 370);
+            chlActividades.Name = "chlActividades";
+            chlActividades.Size = new Size(120, 94);
+            chlActividades.TabIndex = 30;
+            // 
+            // txbCedula
+            // 
+            txbCedula.Location = new Point(81, 87);
+            txbCedula.Name = "txbCedula";
+            txbCedula.Size = new Size(100, 23);
+            txbCedula.TabIndex = 31;
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Location = new Point(31, 90);
+            label11.Name = "label11";
+            label11.Size = new Size(44, 15);
+            label11.TabIndex = 32;
+            label11.Text = "Cedula";
+            // 
+            // dtgvEstudianteActividad
+            // 
+            dtgvEstudianteActividad.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dtgvEstudianteActividad.Location = new Point(381, 279);
+            dtgvEstudianteActividad.Name = "dtgvEstudianteActividad";
+            dtgvEstudianteActividad.Size = new Size(252, 117);
+            dtgvEstudianteActividad.TabIndex = 33;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 504);
-            Controls.Add(lstEstudiantes);
+            ClientSize = new Size(860, 504);
+            Controls.Add(dtgvEstudianteActividad);
+            Controls.Add(label11);
+            Controls.Add(txbCedula);
+            Controls.Add(chlActividades);
+            Controls.Add(btnLimpiar);
             Controls.Add(lbEstado);
             Controls.Add(lbPromedio);
             Controls.Add(label10);
@@ -322,9 +331,6 @@
             Controls.Add(pbImagen);
             Controls.Add(dtgvEstudiantes);
             Controls.Add(btnRegistrar);
-            Controls.Add(cbArte);
-            Controls.Add(cbMusica);
-            Controls.Add(cbDeportes);
             Controls.Add(label7);
             Controls.Add(rbFemenino);
             Controls.Add(rbMasculino);
@@ -347,6 +353,7 @@
             ((System.ComponentModel.ISupportInitialize)pbImagen).EndInit();
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dtgvEstudianteActividad).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -367,9 +374,6 @@
         private RadioButton rbMasculino;
         private RadioButton rbFemenino;
         private Label label7;
-        private CheckBox cbDeportes;
-        private CheckBox cbMusica;
-        private CheckBox cbArte;
         private Button btnRegistrar;
         private DataGridView dtgvEstudiantes;
         private PictureBox pbImagen;
@@ -378,8 +382,12 @@
         private Label label10;
         private Label lbPromedio;
         private Label lbEstado;
-        private ListBox lstEstudiantes;
         private MenuStrip menuStrip1;
         private ToolStripMenuItem cORREOToolStripMenuItem;
+        private Button btnLimpiar;
+        private CheckedListBox chlActividades;
+        private TextBox txbCedula;
+        private Label label11;
+        private DataGridView dtgvEstudianteActividad;
     }
 }
