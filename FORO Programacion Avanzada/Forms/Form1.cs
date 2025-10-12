@@ -231,23 +231,36 @@ namespace FORO_Programacion_Avanzada
 
         }
 
-        private void btnEliminar_Click(object sender, EventArgs e)
+
+        private void dtgvEstudiantes_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            try
+            if (e.RowIndex >= 0)
             {
-                int IdEstudiante = int.Parse(txbCedula.Text);
+                // Obtener el Id del estudiante
+                int IdEstudiante = Convert.ToInt32(dtgvEstudiantes.Rows[e.RowIndex].Cells["IdEstudiante"].Value);
 
-                estudianteRepository.EliminarEstudiante(IdEstudiante);
+                // Confirmación antes de eliminar
+                DialogResult resultado = MessageBox.Show(
+                    "¿Estás seguro de eliminar a este estudiante?",
+                    "Confirmar eliminación",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
 
-                CargarDatos();
-                LimpiarFormulario();
+                if (resultado == DialogResult.Yes)
+                {
+                    // Llamar al repositorio
+                    estudianteRepository.EliminarEstudiante(IdEstudiante);
+
+                    CargarDatos();
+                    LimpiarFormulario();
+
+                }
             }
-            catch(Exception ex)
-            {
+        }
 
-                MessageBox.Show("Error al eliminar estudiante: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-           
+        private void btnReporte_Click(object sender, EventArgs e)
+        {
+            estudianteRepository.GenerarReporte();
         }
     }
 }

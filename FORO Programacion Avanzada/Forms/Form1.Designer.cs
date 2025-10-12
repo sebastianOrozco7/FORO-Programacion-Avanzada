@@ -58,7 +58,7 @@
             label11 = new Label();
             dtgvEstudianteActividad = new DataGridView();
             btnEditar = new Button();
-            btnEliminar = new Button();
+            btnReporte = new Button();
             ((System.ComponentModel.ISupportInitialize)dtgvEstudiantes).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pbImagen).BeginInit();
             menuStrip1.SuspendLayout();
@@ -202,6 +202,7 @@
             dtgvEstudiantes.Name = "dtgvEstudiantes";
             dtgvEstudiantes.Size = new Size(429, 221);
             dtgvEstudiantes.TabIndex = 20;
+            dtgvEstudiantes.CellDoubleClick += dtgvEstudiantes_CellDoubleClick;
             dtgvEstudiantes.SelectionChanged += dtgvEstudiantes_SelectionChanged;
             // 
             // pbImagen
@@ -325,22 +326,22 @@
             btnEditar.UseVisualStyleBackColor = true;
             btnEditar.Click += btnEditar_Click;
             // 
-            // btnEliminar
+            // btnReporte
             // 
-            btnEliminar.Location = new Point(592, 470);
-            btnEliminar.Name = "btnEliminar";
-            btnEliminar.Size = new Size(75, 23);
-            btnEliminar.TabIndex = 35;
-            btnEliminar.Text = "button1";
-            btnEliminar.UseVisualStyleBackColor = true;
-            btnEliminar.Click += btnEliminar_Click;
+            btnReporte.Location = new Point(652, 296);
+            btnReporte.Name = "btnReporte";
+            btnReporte.Size = new Size(75, 23);
+            btnReporte.TabIndex = 35;
+            btnReporte.Text = "Reporte";
+            btnReporte.UseVisualStyleBackColor = true;
+            btnReporte.Click += btnReporte_Click;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(860, 532);
-            Controls.Add(btnEliminar);
+            Controls.Add(btnReporte);
             Controls.Add(btnEditar);
             Controls.Add(dtgvEstudianteActividad);
             Controls.Add(label11);
@@ -414,6 +415,6 @@
         private Label label11;
         private DataGridView dtgvEstudianteActividad;
         private Button btnEditar;
-        private Button btnEliminar;
+        private Button btnReporte;
     }
 }

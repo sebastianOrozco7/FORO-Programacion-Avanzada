@@ -116,5 +116,43 @@ namespace FORO_Programacion_Avanzada.Data
                 }
             }
         }
+
+        public void GenerarReporte()
+        {
+            try
+            {
+                string Query = "SELECT " +
+                               "Nombre, " +
+                               "(Nota1 + Nota2 + Nota3) / 3.0 AS Promedio, " +
+                               "CASE " +
+                               "WHEN (Nota1 + Nota2 + Nota3) / 3.0 >= 3.0 THEN 'Aprobado' " +
+                               "ELSE 'Reprobado' " +
+                               "END AS Estado " +
+                               "FROM Estudiante;";
+
+                using (MySqlConnection conexion = new Conexion().GetConnection())
+                {
+                    conexion.Open();
+                    using(MySqlCommand cmd = new MySqlCommand(Query, conexion))
+                    {
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            string Reporte = "REPORTE DE ESTUDIANTES:\n ";
+
+                            while(reader.Read())
+                            {
+                                Reporte += $"Nombre: {reader["Nombre"]}, Promedio: {reader["Promedio"]}, Estado: {reader["Estado"]}\n";
+
+                            }
+                            MessageBox.Show(Reporte);
+                        }
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show($"ERROR EN REPORTE: {ex.Message}");
+            }
+        }
     }
 }
