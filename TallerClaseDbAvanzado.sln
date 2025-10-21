@@ -5,8 +5,6 @@ VisualStudioVersion = 17.13.35931.197
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TallerClaseDBAvanzado", "FORO Programacion Avanzada\TallerClaseDBAvanzado.csproj", "{1F15AC77-EBC9-44FD-BC9F-D0BBCE67BD62}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataSerializers", "DataSerializers\DataSerializers.csproj", "{5AF1A583-6BC9-4FD9-8848-6F1A71072BF6}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{1F15AC77-EBC9-44FD-BC9F-D0BBCE67BD62}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F15AC77-EBC9-44FD-BC9F-D0BBCE67BD62}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F15AC77-EBC9-44FD-BC9F-D0BBCE67BD62}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5AF1A583-6BC9-4FD9-8848-6F1A71072BF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5AF1A583-6BC9-4FD9-8848-6F1A71072BF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5AF1A583-6BC9-4FD9-8848-6F1A71072BF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5AF1A583-6BC9-4FD9-8848-6F1A71072BF6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

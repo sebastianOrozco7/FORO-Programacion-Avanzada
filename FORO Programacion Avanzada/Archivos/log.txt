@@ -1,0 +1,1 @@
+[21/10/2025 5:04:49 p. m.] ERROR: Error al registrar estudiante andres: Duplicate entry '123' for key 'estudiante.PRIMARY'

@@ -17,17 +17,17 @@ namespace FORO_Programacion_Avanzada.Data
         {
             string Query = "INSERT INTO Estudiante(IdEstudiante,Nombre,Genero,Edad,Nota1,Nota2,Nota3)" +
                             "VALUES (@IdEstudiante,@Nombre,@Genero,@Edad,@Nota1,@Nota2,@Nota3)";
-       
 
-            
-                using(MySqlConnection conexion = new Conexion().GetConnection())
+            try
+            {
+                using (MySqlConnection conexion = new Conexion().GetConnection())
                 {
                     conexion.Open();
 
-                    using(MySqlCommand cmd = new MySqlCommand(Query, conexion))
+                    using (MySqlCommand cmd = new MySqlCommand(Query, conexion))
                     {
-                        cmd.Parameters.AddWithValue("@IdEstudiante",estudiante.IdEstudiante);
-                        cmd.Parameters.AddWithValue("@Nombre",estudiante.Nombre);
+                        cmd.Parameters.AddWithValue("@IdEstudiante", estudiante.IdEstudiante);
+                        cmd.Parameters.AddWithValue("@Nombre", estudiante.Nombre);
                         cmd.Parameters.AddWithValue("@Genero", estudiante.Genero);
                         cmd.Parameters.AddWithValue("@Edad", estudiante.Edad);
                         cmd.Parameters.AddWithValue("@Nota1", estudiante.Nota1);
@@ -35,9 +35,17 @@ namespace FORO_Programacion_Avanzada.Data
                         cmd.Parameters.AddWithValue("@Nota3", estudiante.Nota3);
 
                         cmd.ExecuteNonQuery();
-                        
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                // Guardamos el error en el log
+                Logger.LogError($"Error al registrar estudiante {estudiante.Nombre}: {ex.Message}");
+                // Lanza la excepción nuevamente si quieres mostrar mensaje al usuario
+                throw;
+            }
+
         }
 
         public List<Estudiante> ObtenerEstudiantes()
@@ -115,22 +123,32 @@ namespace FORO_Programacion_Avanzada.Data
             string Query = "UPDATE Estudiante SET Nombre = @Nombre, Genero = @Genero, Edad = @Edad," +
                             "Nota1 = @Nota1, Nota2 = @Nota2, Nota3 = @Nota3 WHERE IdEstudiante = @IdEstudiante";
 
-            using(MySqlConnection conexion = new Conexion().GetConnection())
+            try
             {
-                conexion.Open();
-                
-                using(MySqlCommand cmd = new MySqlCommand(Query, conexion))
+                using (MySqlConnection conexion = new Conexion().GetConnection())
                 {
-                    cmd.Parameters.AddWithValue("@Nombre", estudiante.Nombre);
-                    cmd.Parameters.AddWithValue("@Genero", estudiante.Genero);
-                    cmd.Parameters.AddWithValue("@Edad",estudiante.Edad);
-                    cmd.Parameters.AddWithValue("@Nota1",estudiante.Nota1);
-                    cmd.Parameters.AddWithValue("@Nota2",estudiante.Nota2);
-                    cmd.Parameters.AddWithValue("@Nota3",estudiante.Nota3);
-                    cmd.Parameters.AddWithValue("@IdEstudiante",estudiante.IdEstudiante);
+                    conexion.Open();
 
-                    cmd.ExecuteNonQuery();
+                    using (MySqlCommand cmd = new MySqlCommand(Query, conexion))
+                    {
+                        cmd.Parameters.AddWithValue("@Nombre", estudiante.Nombre);
+                        cmd.Parameters.AddWithValue("@Genero", estudiante.Genero);
+                        cmd.Parameters.AddWithValue("@Edad", estudiante.Edad);
+                        cmd.Parameters.AddWithValue("@Nota1", estudiante.Nota1);
+                        cmd.Parameters.AddWithValue("@Nota2", estudiante.Nota2);
+                        cmd.Parameters.AddWithValue("@Nota3", estudiante.Nota3);
+                        cmd.Parameters.AddWithValue("@IdEstudiante", estudiante.IdEstudiante);
+
+                        cmd.ExecuteNonQuery();
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                // Guardamos el error en el log
+                Logger.LogError($"Error al actualizar estudiante {estudiante.Nombre}: {ex.Message}");
+                // Lanza la excepción nuevamente si quieres mostrar mensaje al usuario
+                throw;
             }
         }
 
@@ -138,19 +156,30 @@ namespace FORO_Programacion_Avanzada.Data
         {
             string Query = "DELETE FROM Estudiante WHERE IdEstudiante = @IdEstudiante";
 
-            //primero necesitamos eliminar la relacion porque si no nos dara error asi que llamamos el metodo que borra EstudianteActividad
-            ActividadExtraRepository actividadExtra = new ActividadExtraRepository();
-            actividadExtra.EliminarEstudianteActividad(IdEstudiante);
-
-            using(MySqlConnection conexion = new Conexion().GetConnection())
+            try
             {
-                conexion.Open();
 
-                using(MySqlCommand cmd = new MySqlCommand(Query, conexion))
+                //primero necesitamos eliminar la relacion porque si no nos dara error asi que llamamos el metodo que borra EstudianteActividad
+                ActividadExtraRepository actividadExtra = new ActividadExtraRepository();
+                actividadExtra.EliminarEstudianteActividad(IdEstudiante);
+
+                using (MySqlConnection conexion = new Conexion().GetConnection())
                 {
-                    cmd.Parameters.AddWithValue("@IdEstudiante", IdEstudiante);
-                    cmd.ExecuteNonQuery();
+                    conexion.Open();
+
+                    using (MySqlCommand cmd = new MySqlCommand(Query, conexion))
+                    {
+                        cmd.Parameters.AddWithValue("@IdEstudiante", IdEstudiante);
+                        cmd.ExecuteNonQuery();
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                // Guardamos el error en el log
+                Logger.LogError($"Error al eliminar estudiante con el id {IdEstudiante}: {ex.Message}");
+                // Lanza la excepción nuevamente si quieres mostrar mensaje al usuario
+                throw;
             }
         }
 
@@ -207,47 +236,60 @@ namespace FORO_Programacion_Avanzada.Data
                           AND (@Nombre IS NULL OR e.Nombre LIKE CONCAT('%', @Nombre, '%'));
                     ";
 
-            using (MySqlConnection conn = new Conexion().GetConnection())
+            try
             {
-                conn.Open();
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                using (MySqlConnection conn = new Conexion().GetConnection())
                 {
-                    cmd.Parameters.AddWithValue("@Genero", string.IsNullOrEmpty(Genero) ? DBNull.Value : Genero);
-                    cmd.Parameters.AddWithValue("@Nombre", string.IsNullOrEmpty(Nombre) ? DBNull.Value : Nombre);
+                    conn.Open();
 
-                    using (var reader = cmd.ExecuteReader())
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
-                        while (reader.Read())
-                        {
-                            int id = reader.GetInt32("IdEstudiante");
-                            if (!estudianteDict.ContainsKey(id))
-                            {
-                                var est = new Estudiante
-                                {
-                                    IdEstudiante = id,
-                                    Nombre = reader.GetString("Nombre"),
-                                    Genero = reader.GetString("Genero"),
-                                    Edad = reader.GetInt32("Edad"),
-                                    Nota1 = reader.GetFloat("Nota1"),
-                                    Nota2 = reader.GetFloat("Nota2"),
-                                    Nota3 = reader.GetFloat("Nota3"),
-                                    Actividades = new List<Actividades_Extracurriculares>()
-                                };
-                                estudianteDict.Add(id, est);
-                                estudiantes.Add(est);
-                            }
+                        cmd.Parameters.AddWithValue("@Genero", string.IsNullOrEmpty(Genero) ? DBNull.Value : Genero);
+                        cmd.Parameters.AddWithValue("@Nombre", string.IsNullOrEmpty(Nombre) ? DBNull.Value : Nombre);
 
-                            if (!reader.IsDBNull(reader.GetOrdinal("Actividad")))
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
                             {
-                                estudianteDict[id].Actividades.Add(new Actividades_Extracurriculares
+                                int id = reader.GetInt32("IdEstudiante");
+
+                                if (!estudianteDict.ContainsKey(id))
                                 {
-                                    NombreActividad = reader.GetString("Actividad")
-                                });
+                                    var est = new Estudiante
+                                    {
+                                        IdEstudiante = id,
+                                        Nombre = reader.GetString("Nombre"),
+                                        Genero = reader.GetString("Genero"),
+                                        Edad = reader.GetInt32("Edad"),
+                                        Nota1 = reader.GetFloat("Nota1"),
+                                        Nota2 = reader.GetFloat("Nota2"),
+                                        Nota3 = reader.GetFloat("Nota3"),
+                                        Actividades = new List<Actividades_Extracurriculares>()
+                                    };
+
+                                    estudianteDict.Add(id, est);
+                                    estudiantes.Add(est);
+                                }
+
+                                if (!reader.IsDBNull(reader.GetOrdinal("Actividad")))
+                                {
+                                    estudianteDict[id].Actividades.Add(new Actividades_Extracurriculares
+                                    {
+                                        NombreActividad = reader.GetString("Actividad")
+                                    });
+                                }
                             }
                         }
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                // Registrar el error en el log
+                Logger.LogError($"Error al filtrar estudiantes (Nombre: {Nombre}, Género: {Genero}): {ex.Message}");
+                throw;
+            }
+
             return estudiantes;
         }
     }
