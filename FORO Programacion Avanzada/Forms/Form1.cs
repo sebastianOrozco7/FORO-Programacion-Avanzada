@@ -62,9 +62,10 @@ namespace FORO_Programacion_Avanzada
             txbNota1.Clear();
             txbNota2.Clear();
             txbNota3.Clear();
+            txbNombreFiltro.Clear();
+            cmbFiltro.SelectedIndex = -1;
             rbMasculino.Checked = false;
             rbFemenino.Checked = false;
-
         }
 
         private bool ValidarDatos()
@@ -131,20 +132,21 @@ namespace FORO_Programacion_Avanzada
             }
 
         }
+     
+
         private void PromedioEstado(Estudiante estudiante)
         {
+            double promedio = (estudiante.Nota1 + estudiante.Nota2 + estudiante.Nota3) / 3;
 
-            lbPromedio.Text = estudiante.Promedio().ToString();
-            lbEstado.Text = estudiante.Estado(estudiante.Promedio());
-
-            if (estudiante.Promedio() >= 3.0)
+            if (promedio >= 3)
             {
+                lbEstado.Text = "Aprobado";
                 pbImagen.Image = Image.FromFile(@"Imagenes\Aprobado.png");
                 pbImagen.SizeMode = PictureBoxSizeMode.Zoom;
             }
-
             else
             {
+                lbEstado.Text = "Reprobado";
                 pbImagen.Image = Image.FromFile(@"Imagenes\Reprobado.png");
                 pbImagen.SizeMode = PictureBoxSizeMode.Zoom;
             }
@@ -154,9 +156,12 @@ namespace FORO_Programacion_Avanzada
 
         private void dtgvEstudiantes_SelectionChanged(object sender, EventArgs e)
         {
-            if (dtgvEstudiantes.CurrentRow != null && dtgvEstudiantes.CurrentRow.DataBoundItem is Estudiante seleccionado)
+            if (dtgvEstudiantes.CurrentRow == null)
+                return;
+
+            // Si el DataSource sigue siendo una lista de Estudiante
+            if (dtgvEstudiantes.CurrentRow.DataBoundItem is Estudiante seleccionado)
             {
-                // TextBox
                 txbCedula.Text = seleccionado.IdEstudiante.ToString();
                 txbNombre.Text = seleccionado.Nombre;
                 txbEdad.Text = seleccionado.Edad.ToString();
@@ -164,14 +169,40 @@ namespace FORO_Programacion_Avanzada
                 txbNota2.Text = seleccionado.Nota2.ToString();
                 txbNota3.Text = seleccionado.Nota3.ToString();
 
-                // RadioButton
                 if (seleccionado.Genero == "Masculino")
                     rbMasculino.Checked = true;
                 else if (seleccionado.Genero == "Femenino")
                     rbFemenino.Checked = true;
 
-                // Estado y PictureBox
                 PromedioEstado(seleccionado);
+            }
+            else
+            {
+                // Si no es un objeto Estudiante (por ejemplo, si usaste un .Select)
+                try
+                {
+                    txbCedula.Text = dtgvEstudiantes.CurrentRow.Cells["IdEstudiante"].Value?.ToString();
+                    txbNombre.Text = dtgvEstudiantes.CurrentRow.Cells["Nombre"].Value?.ToString();
+                    txbEdad.Text = dtgvEstudiantes.CurrentRow.Cells["Edad"].Value?.ToString();
+                    txbNota1.Text = dtgvEstudiantes.CurrentRow.Cells["Nota1"].Value?.ToString();
+                    txbNota2.Text = dtgvEstudiantes.CurrentRow.Cells["Nota2"].Value?.ToString();
+                    txbNota3.Text = dtgvEstudiantes.CurrentRow.Cells["Nota3"].Value?.ToString();
+
+                    string genero = dtgvEstudiantes.CurrentRow.Cells["Genero"].Value?.ToString();
+                    rbMasculino.Checked = genero == "Masculino";
+                    rbFemenino.Checked = genero == "Femenino";
+
+                    // Si PromedioEstado solo necesita el promedio, puedes calcularlo así:
+                    float n1 = float.Parse(txbNota1.Text);
+                    float n2 = float.Parse(txbNota2.Text);
+                    float n3 = float.Parse(txbNota3.Text);
+                    float promedio = (n1 + n2 + n3) / 3;
+                    //PromedioEstado(seleccionado);
+                }
+                catch
+                {
+                    // Si alguna columna no existe, evita que se rompa el programa
+                }
             }
         }
 
@@ -275,6 +306,37 @@ namespace FORO_Programacion_Avanzada
         private void btnReporte_Click(object sender, EventArgs e)
         {
             estudianteRepository.GenerarReporte();
+        }
+
+        private void btnFiltrar_Click(object sender, EventArgs e)
+        {
+            string Genero = cmbFiltro.SelectedItem?.ToString() == "Todos" ? null : cmbFiltro.SelectedItem?.ToString();
+            string NombreFiltrado = txbNombreFiltro.Text;
+
+
+            var ListaFiltrada = estudianteRepository.FiltrarEstudiantes(NombreFiltrado, Genero);
+
+            var listaAdaptada = ListaFiltrada.Select(e => new
+            {
+                e.IdEstudiante,
+                e.Nombre,
+                e.Genero,
+                e.Edad,
+                e.Nota1,
+                e.Nota2,
+                e.Nota3,
+                Promedio = (e.Nota1 + e.Nota2 + e.Nota3) / 3,
+                Actividades = string.Join(", ", e.Actividades.Select(a => a.NombreActividad))
+            }).ToList();
+
+            dtgvEstudiantes.DataSource = listaAdaptada;
+
+            LimpiarFormulario();
+        }
+
+        private void btnRestablecer_Click(object sender, EventArgs e)
+        {
+            CargarDatos();
         }
     }
 }

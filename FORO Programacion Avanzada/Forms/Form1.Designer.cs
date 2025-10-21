@@ -59,6 +59,11 @@
             dtgvEstudianteActividad = new DataGridView();
             btnEditar = new Button();
             btnReporte = new Button();
+            label12 = new Label();
+            cmbFiltro = new ComboBox();
+            txbNombreFiltro = new TextBox();
+            btnFiltrar = new Button();
+            btnRestablecer = new Button();
             ((System.ComponentModel.ISupportInitialize)dtgvEstudiantes).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pbImagen).BeginInit();
             menuStrip1.SuspendLayout();
@@ -263,7 +268,7 @@
             menuStrip1.Items.AddRange(new ToolStripItem[] { cORREOToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(860, 24);
+            menuStrip1.Size = new Size(965, 24);
             menuStrip1.TabIndex = 28;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -313,7 +318,7 @@
             dtgvEstudianteActividad.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dtgvEstudianteActividad.Location = new Point(381, 279);
             dtgvEstudianteActividad.Name = "dtgvEstudianteActividad";
-            dtgvEstudianteActividad.Size = new Size(252, 117);
+            dtgvEstudianteActividad.Size = new Size(252, 79);
             dtgvEstudianteActividad.TabIndex = 33;
             // 
             // btnEditar
@@ -336,11 +341,61 @@
             btnReporte.UseVisualStyleBackColor = true;
             btnReporte.Click += btnReporte_Click;
             // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Location = new Point(835, 68);
+            label12.Name = "label12";
+            label12.Size = new Size(49, 15);
+            label12.TabIndex = 36;
+            label12.Text = "FILTROS";
+            // 
+            // cmbFiltro
+            // 
+            cmbFiltro.FormattingEnabled = true;
+            cmbFiltro.Items.AddRange(new object[] { "Masculino", "Femenino", "Todos" });
+            cmbFiltro.Location = new Point(797, 116);
+            cmbFiltro.Name = "cmbFiltro";
+            cmbFiltro.Size = new Size(121, 23);
+            cmbFiltro.TabIndex = 37;
+            // 
+            // txbNombreFiltro
+            // 
+            txbNombreFiltro.Location = new Point(797, 176);
+            txbNombreFiltro.Name = "txbNombreFiltro";
+            txbNombreFiltro.Size = new Size(138, 23);
+            txbNombreFiltro.TabIndex = 38;
+            // 
+            // btnFiltrar
+            // 
+            btnFiltrar.Location = new Point(822, 241);
+            btnFiltrar.Name = "btnFiltrar";
+            btnFiltrar.Size = new Size(75, 23);
+            btnFiltrar.TabIndex = 39;
+            btnFiltrar.Text = "Filtrar";
+            btnFiltrar.UseVisualStyleBackColor = true;
+            btnFiltrar.Click += btnFiltrar_Click;
+            // 
+            // btnRestablecer
+            // 
+            btnRestablecer.Location = new Point(822, 270);
+            btnRestablecer.Name = "btnRestablecer";
+            btnRestablecer.Size = new Size(75, 23);
+            btnRestablecer.TabIndex = 40;
+            btnRestablecer.Text = "Restablecer";
+            btnRestablecer.UseVisualStyleBackColor = true;
+            btnRestablecer.Click += btnRestablecer_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(860, 532);
+            ClientSize = new Size(965, 532);
+            Controls.Add(btnRestablecer);
+            Controls.Add(btnFiltrar);
+            Controls.Add(txbNombreFiltro);
+            Controls.Add(cmbFiltro);
+            Controls.Add(label12);
             Controls.Add(btnReporte);
             Controls.Add(btnEditar);
             Controls.Add(dtgvEstudianteActividad);
@@ -416,5 +471,10 @@
         private DataGridView dtgvEstudianteActividad;
         private Button btnEditar;
         private Button btnReporte;
+        private Label label12;
+        private ComboBox cmbFiltro;
+        private TextBox txbNombreFiltro;
+        private Button btnFiltrar;
+        private Button btnRestablecer;
     }
 }

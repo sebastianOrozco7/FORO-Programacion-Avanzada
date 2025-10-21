@@ -7,6 +7,7 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace FORO_Programacion_Avanzada.Data
 {
@@ -189,6 +190,65 @@ namespace FORO_Programacion_Avanzada.Data
             {
                 MessageBox.Show($"ERROR EN REPORTE: {ex.Message}");
             }
+        }
+
+        public List<Estudiante> FiltrarEstudiantes(string Nombre, string Genero)
+        {
+            var estudiantes = new List<Estudiante>();
+            var estudianteDict = new Dictionary<int, Estudiante>();
+
+            string query = @"
+                        SELECT e.IdEstudiante, e.Nombre, e.Genero, e.Edad, e.Nota1, e.Nota2, e.Nota3,
+                               a.Nombre AS Actividad
+                        FROM Estudiante e
+                        LEFT JOIN EstudianteActividad ea ON e.IdEstudiante = ea.IdEstudiante
+                        LEFT JOIN ActividadExtra a ON ea.IdActividad = a.IdActividad
+                        WHERE (@Genero IS NULL OR e.Genero = @Genero)
+                          AND (@Nombre IS NULL OR e.Nombre LIKE CONCAT('%', @Nombre, '%'));
+                    ";
+
+            using (MySqlConnection conn = new Conexion().GetConnection())
+            {
+                conn.Open();
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Genero", string.IsNullOrEmpty(Genero) ? DBNull.Value : Genero);
+                    cmd.Parameters.AddWithValue("@Nombre", string.IsNullOrEmpty(Nombre) ? DBNull.Value : Nombre);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            int id = reader.GetInt32("IdEstudiante");
+                            if (!estudianteDict.ContainsKey(id))
+                            {
+                                var est = new Estudiante
+                                {
+                                    IdEstudiante = id,
+                                    Nombre = reader.GetString("Nombre"),
+                                    Genero = reader.GetString("Genero"),
+                                    Edad = reader.GetInt32("Edad"),
+                                    Nota1 = reader.GetFloat("Nota1"),
+                                    Nota2 = reader.GetFloat("Nota2"),
+                                    Nota3 = reader.GetFloat("Nota3"),
+                                    Actividades = new List<Actividades_Extracurriculares>()
+                                };
+                                estudianteDict.Add(id, est);
+                                estudiantes.Add(est);
+                            }
+
+                            if (!reader.IsDBNull(reader.GetOrdinal("Actividad")))
+                            {
+                                estudianteDict[id].Actividades.Add(new Actividades_Extracurriculares
+                                {
+                                    NombreActividad = reader.GetString("Actividad")
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+            return estudiantes;
         }
     }
 }
