@@ -16,7 +16,7 @@ namespace FORO_Programacion_Avanzada.Data
         {
             string Query = "INSERT INTO Estudiante(IdEstudiante,Nombre,Genero,Edad,Nota1,Nota2,Nota3)" +
                             "VALUES (@IdEstudiante,@Nombre,@Genero,@Edad,@Nota1,@Nota2,@Nota3)";
-            bool Registrado = false;
+       
 
             
                 using(MySqlConnection conexion = new Conexion().GetConnection())
@@ -41,9 +41,23 @@ namespace FORO_Programacion_Avanzada.Data
 
         public List<Estudiante> ObtenerEstudiantes()
         {
+            // Diccionario para evitar duplicados
+            Dictionary<int, Estudiante> estudiantesDict = new Dictionary<int, Estudiante>();
 
-            List<Estudiante> lista = new List<Estudiante>();
-            string Query = "SELECT IdEstudiante,Nombre,Genero,Edad,Nota1,Nota2,Nota3 FROM Estudiante";
+            string Query = @"
+        SELECT 
+            e.IdEstudiante,
+            e.Nombre,
+            e.Genero,
+            e.Edad,
+            e.Nota1,
+            e.Nota2,
+            e.Nota3,
+            a.IdActividad,
+            a.Nombre AS NombreActividad
+        FROM Estudiante e
+        LEFT JOIN EstudianteActividad ea ON e.IdEstudiante = ea.IdEstudiante
+        LEFT JOIN ActividadExtra a ON ea.IdActividad = a.IdActividad;";
 
             using (MySqlConnection conexion = new Conexion().GetConnection())
             {
@@ -54,24 +68,46 @@ namespace FORO_Programacion_Avanzada.Data
                     {
                         while (reader.Read())
                         {
-                            Estudiante estudiante = new Estudiante
+                            int idEstudiante = reader.GetInt32("IdEstudiante");
+
+                            // Si el estudiante no existe aún en el diccionario, lo creamos
+                            if (!estudiantesDict.ContainsKey(idEstudiante))
                             {
-                                IdEstudiante = reader.GetInt32("IdEstudiante"),
-                                Nombre = reader.GetString("Nombre"),
-                                Genero = reader.GetString("Genero"),
-                                Edad = reader.GetInt32("Edad"),
-                                Nota1 = reader.GetFloat("Nota1"),
-                                Nota2 = reader.GetFloat("Nota2"),
-                                Nota3 = reader.GetFloat("Nota3"),
-                            };
-                            lista.Add(estudiante);
+                                var estudiante = new Estudiante
+                                {
+                                    IdEstudiante = idEstudiante,
+                                    Nombre = reader.GetString("Nombre"),
+                                    Genero = reader.GetString("Genero"),
+                                    Edad = reader.GetInt32("Edad"),
+                                    Nota1 = reader.GetFloat("Nota1"),
+                                    Nota2 = reader.GetFloat("Nota2"),
+                                    Nota3 = reader.GetFloat("Nota3"),
+                                    Actividades = new List<Actividades_Extracurriculares>() // importante
+                                };
+
+                                estudiantesDict.Add(idEstudiante, estudiante);
+                            }
+
+                            // Si el estudiante tiene una actividad asociada, la agregamos
+                            if (!reader.IsDBNull(reader.GetOrdinal("IdActividad")))
+                            {
+                                var actividad = new Actividades_Extracurriculares
+                                {
+                                    IdActividad = reader.GetInt32("IdActividad"),
+                                    NombreActividad = reader.GetString("NombreActividad")
+                                };
+
+                                estudiantesDict[idEstudiante].Actividades.Add(actividad);
+                            }
                         }
                     }
                 }
             }
 
-            return lista;
+            // Devolvemos la lista final de estudiantes
+            return estudiantesDict.Values.ToList();
         }
+
 
         public void editarEstudiante(Estudiante estudiante, int Id)
         {

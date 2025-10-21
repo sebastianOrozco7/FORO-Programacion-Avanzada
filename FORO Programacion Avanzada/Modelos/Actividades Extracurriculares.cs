@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FORO_Programacion_Avanzada.Modelos
 {
-    internal class Actividades_Extracurriculares
+    public class Actividades_Extracurriculares
     {
         public int IdActividad {  get; set; }
         public string NombreActividad { get; set; }

@@ -16,6 +16,8 @@ namespace FORO_Programacion_Avanzada.Modelos
         public double Nota3 { get; set; }
         public string Genero { get; set; }
 
+        public List<Actividades_Extracurriculares> Actividades { get; set; }
+
         public double Promedio()
         {
             double promedio = (Nota1 + Nota2 + Nota3) / 3.0;

@@ -25,7 +25,21 @@ namespace FORO_Programacion_Avanzada
         private void CargarDatos()
         {
             var ListaEstudiantes = estudianteRepository.ObtenerEstudiantes();
-            dtgvEstudiantes.DataSource = ListaEstudiantes;
+
+            var listaAdaptada = ListaEstudiantes.Select(e => new
+            {
+                e.IdEstudiante,
+                e.Nombre,
+                e.Genero,
+                e.Edad,
+                e.Nota1,
+                e.Nota2,
+                e.Nota3,
+                Actividades = string.Join(", ", e.Actividades.Select(a => a.NombreActividad))
+            }).ToList();
+
+            // Asignamos al DataGridView
+            dtgvEstudiantes.DataSource = listaAdaptada;
 
             var ListaEstudiantesActividades = actividadRepository.ObtenerInfoEstudianteActividad();
             dtgvEstudianteActividad.DataSource = ListaEstudiantesActividades;
