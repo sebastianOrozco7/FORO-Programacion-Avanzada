@@ -18,9 +18,8 @@ namespace FORO_Programacion_Avanzada.Data
 
             string Query = "Select IdActividad, Nombre from ActividadExtra";
 
-            using (MySqlConnection conexion = new Conexion().GetConnection())
+            using (MySqlConnection conexion = Conexion.GetConnectionWithRetry())
             {
-                conexion.Open();
                 using(MySqlCommand cmd = new MySqlCommand(Query, conexion))
                 {
                     using(MySqlDataReader reader = cmd.ExecuteReader())
@@ -48,9 +47,8 @@ namespace FORO_Programacion_Avanzada.Data
             string Query = "INSERT INTO EstudianteActividad(IdEstudiante,IdActividad)" +
                             "VALUES(@IdEstudiante,@IdActividad)";
 
-                using (MySqlConnection conexion = new Conexion().GetConnection())
+                using (MySqlConnection conexion = Conexion.GetConnectionWithRetry())
                 {
-                    conexion.Open();
 
                     using (MySqlCommand cmd = new MySqlCommand(Query, conexion))
                     {
@@ -72,9 +70,8 @@ namespace FORO_Programacion_Avanzada.Data
                             INNER JOIN Estudiante e ON ea.IdEstudiante = e.IdEstudiante
                             INNER JOIN ActividadExtra a ON ea.IdActividad = a.IdActividad;";
 
-            using(MySqlConnection conexion = new Conexion().GetConnection())
+            using(MySqlConnection conexion = Conexion.GetConnectionWithRetry())
             {
-                conexion.Open();
                 using (MySqlCommand cmd = new MySqlCommand(Query, conexion))
                 {
                     using (MySqlDataAdapter adapter = new MySqlDataAdapter(cmd))
@@ -91,9 +88,8 @@ namespace FORO_Programacion_Avanzada.Data
         {
             string QueryEliminar = "DELETE FROM EstudianteActividad Where IdEstudiante = @IdEstudiante";
 
-            using (MySqlConnection conexion = new Conexion().GetConnection())
+            using (MySqlConnection conexion = Conexion.GetConnectionWithRetry())
             {
-                conexion.Open();
                 using(MySqlCommand cmdEliminar = new MySqlCommand(QueryEliminar, conexion))
                 {
                     cmdEliminar.Parameters.AddWithValue("@IdEstudiante",IdEstudiante);

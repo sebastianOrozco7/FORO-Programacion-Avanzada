@@ -10,13 +10,27 @@ namespace FORO_Programacion_Avanzada.Modelos
     {
         private static readonly string logPath = @"..\..\..\Archivos\log.txt";
 
+        public static void Log(string message)
+        {
+            try
+            {
+                using (StreamWriter writer = new StreamWriter(logPath, true))
+                {
+                    writer.WriteLine($"[{DateTime.Now}] ✅  CORRECTO: {message}");
+                }
+            }
+            catch
+            {
+                // Evita que falle el programa si hay error al escribir el log.
+            }
+        }
         public static void LogError(string message)
         {
             try
             {
                 using (StreamWriter writer = new StreamWriter(logPath, true))
                 {
-                    writer.WriteLine($"[{DateTime.Now}] ERROR: {message}");
+                    writer.WriteLine($"[{DateTime.Now}] ❌  ERROR: {message}");
                 }
             }
             catch

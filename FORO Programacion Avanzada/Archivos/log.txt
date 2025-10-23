@@ -1,1 +1,8 @@
 [21/10/2025 5:04:49 p. m.] ERROR: Error al registrar estudiante andres: Duplicate entry '123' for key 'estudiante.PRIMARY'
+[23/10/2025 4:21:29 p. m.] ✅  CORRECTO: Conexión establecida correctamente al entorno: Local
+[23/10/2025 4:21:29 p. m.] ✅  CORRECTO: Conexión establecida correctamente al entorno: Local
+[23/10/2025 4:21:29 p. m.] ✅  CORRECTO: Conexión establecida correctamente al entorno: Local
+[23/10/2025 4:22:44 p. m.] ❌  ERROR: Intento 1 fallido: Authentication to host 'localhost' for user 'root' using method 'caching_sha2_password' failed with message: Unknown database 'gestionestudiants'
+[23/10/2025 4:30:23 p. m.] ❌  ERROR: Intento 1 fallido: Authentication to host 'localhost' for user 'rot' using method 'caching_sha2_password' failed with message: Access denied for user 'rot'@'localhost' (using password: YES)
+[23/10/2025 4:30:25 p. m.] ❌  ERROR: Intento 2 fallido: Authentication to host 'localhost' for user 'rot' using method 'caching_sha2_password' failed with message: Access denied for user 'rot'@'localhost' (using password: YES)
+[23/10/2025 4:30:27 p. m.] ❌  ERROR: Intento 3 fallido: Authentication to host 'localhost' for user 'rot' using method 'caching_sha2_password' failed with message: Access denied for user 'rot'@'localhost' (using password: YES)

@@ -20,9 +20,9 @@ namespace FORO_Programacion_Avanzada.Data
 
             try
             {
-                using (MySqlConnection conexion = new Conexion().GetConnection())
+                using (MySqlConnection conexion = Conexion.GetConnectionWithRetry())
                 {
-                    conexion.Open();
+                    
 
                     using (MySqlCommand cmd = new MySqlCommand(Query, conexion))
                     {
@@ -68,9 +68,9 @@ namespace FORO_Programacion_Avanzada.Data
         LEFT JOIN EstudianteActividad ea ON e.IdEstudiante = ea.IdEstudiante
         LEFT JOIN ActividadExtra a ON ea.IdActividad = a.IdActividad;";
 
-            using (MySqlConnection conexion = new Conexion().GetConnection())
+            using (MySqlConnection conexion = Conexion.GetConnectionWithRetry())
             {
-                conexion.Open();
+                
                 using (MySqlCommand cmd = new MySqlCommand(Query, conexion))
                 {
                     using (MySqlDataReader reader = cmd.ExecuteReader())
@@ -125,9 +125,8 @@ namespace FORO_Programacion_Avanzada.Data
 
             try
             {
-                using (MySqlConnection conexion = new Conexion().GetConnection())
+                using (MySqlConnection conexion = Conexion.GetConnectionWithRetry())
                 {
-                    conexion.Open();
 
                     using (MySqlCommand cmd = new MySqlCommand(Query, conexion))
                     {
@@ -163,9 +162,8 @@ namespace FORO_Programacion_Avanzada.Data
                 ActividadExtraRepository actividadExtra = new ActividadExtraRepository();
                 actividadExtra.EliminarEstudianteActividad(IdEstudiante);
 
-                using (MySqlConnection conexion = new Conexion().GetConnection())
+                using (MySqlConnection conexion = Conexion.GetConnectionWithRetry())
                 {
-                    conexion.Open();
 
                     using (MySqlCommand cmd = new MySqlCommand(Query, conexion))
                     {
@@ -196,9 +194,8 @@ namespace FORO_Programacion_Avanzada.Data
                                "END AS Estado " +
                                "FROM Estudiante;";
 
-                using (MySqlConnection conexion = new Conexion().GetConnection())
+                using (MySqlConnection conexion = Conexion.GetConnectionWithRetry())
                 {
-                    conexion.Open();
                     using(MySqlCommand cmd = new MySqlCommand(Query, conexion))
                     {
                         using (MySqlDataReader reader = cmd.ExecuteReader())
@@ -238,9 +235,8 @@ namespace FORO_Programacion_Avanzada.Data
 
             try
             {
-                using (MySqlConnection conn = new Conexion().GetConnection())
+                using (MySqlConnection conn = Conexion.GetConnectionWithRetry())
                 {
-                    conn.Open();
 
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
