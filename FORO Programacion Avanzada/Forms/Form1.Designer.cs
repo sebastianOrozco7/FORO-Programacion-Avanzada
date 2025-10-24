@@ -70,8 +70,8 @@
             label16 = new Label();
             label17 = new Label();
             cmbReporte = new ComboBox();
-            btnReporteEdadDesc = new Button();
-            btnReporteEdadAsc = new Button();
+            btnReporteEdad = new Button();
+            btnReportePromedio = new Button();
             ((System.ComponentModel.ISupportInitialize)dtgvEstudiantes).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pbImagen).BeginInit();
             menuStrip1.SuspendLayout();
@@ -213,14 +213,14 @@
             dtgvEstudiantes.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dtgvEstudiantes.Location = new Point(204, 58);
             dtgvEstudiantes.Name = "dtgvEstudiantes";
-            dtgvEstudiantes.Size = new Size(429, 221);
+            dtgvEstudiantes.Size = new Size(467, 221);
             dtgvEstudiantes.TabIndex = 20;
             dtgvEstudiantes.CellDoubleClick += dtgvEstudiantes_CellDoubleClick;
             dtgvEstudiantes.SelectionChanged += dtgvEstudiantes_SelectionChanged;
             // 
             // pbImagen
             // 
-            pbImagen.Location = new Point(639, 58);
+            pbImagen.Location = new Point(672, 58);
             pbImagen.Name = "pbImagen";
             pbImagen.Size = new Size(88, 90);
             pbImagen.TabIndex = 21;
@@ -229,7 +229,7 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new Point(639, 184);
+            label8.Location = new Point(677, 184);
             label8.Name = "label8";
             label8.Size = new Size(59, 15);
             label8.TabIndex = 22;
@@ -247,7 +247,7 @@
             // label10
             // 
             label10.AutoSize = true;
-            label10.Location = new Point(639, 219);
+            label10.Location = new Point(677, 216);
             label10.Name = "label10";
             label10.Size = new Size(42, 15);
             label10.TabIndex = 24;
@@ -256,7 +256,7 @@
             // lbPromedio
             // 
             lbPromedio.AutoSize = true;
-            lbPromedio.Location = new Point(708, 184);
+            lbPromedio.Location = new Point(741, 184);
             lbPromedio.Name = "lbPromedio";
             lbPromedio.Size = new Size(19, 15);
             lbPromedio.TabIndex = 25;
@@ -265,7 +265,7 @@
             // lbEstado
             // 
             lbEstado.AutoSize = true;
-            lbEstado.Location = new Point(708, 219);
+            lbEstado.Location = new Point(741, 219);
             lbEstado.Name = "lbEstado";
             lbEstado.Size = new Size(19, 15);
             lbEstado.TabIndex = 26;
@@ -448,33 +448,33 @@
             cmbReporte.Size = new Size(121, 23);
             cmbReporte.TabIndex = 47;
             // 
-            // btnReporteEdadDesc
+            // btnReporteEdad
             // 
-            btnReporteEdadDesc.Location = new Point(799, 173);
-            btnReporteEdadDesc.Name = "btnReporteEdadDesc";
-            btnReporteEdadDesc.Size = new Size(110, 54);
-            btnReporteEdadDesc.TabIndex = 48;
-            btnReporteEdadDesc.Text = "Generar Reporte por edad Descendente";
-            btnReporteEdadDesc.UseVisualStyleBackColor = true;
-            btnReporteEdadDesc.Click += btnReporteEdad_Click;
+            btnReporteEdad.Location = new Point(799, 173);
+            btnReporteEdad.Name = "btnReporteEdad";
+            btnReporteEdad.Size = new Size(110, 54);
+            btnReporteEdad.TabIndex = 48;
+            btnReporteEdad.Text = "Generar Reporte por edad";
+            btnReporteEdad.UseVisualStyleBackColor = true;
+            btnReporteEdad.Click += btnReporteEdad_Click;
             // 
-            // btnReporteEdadAsc
+            // btnReportePromedio
             // 
-            btnReporteEdadAsc.Location = new Point(959, 173);
-            btnReporteEdadAsc.Name = "btnReporteEdadAsc";
-            btnReporteEdadAsc.Size = new Size(110, 54);
-            btnReporteEdadAsc.TabIndex = 49;
-            btnReporteEdadAsc.Text = "Generar Reporte por edad Ascendente";
-            btnReporteEdadAsc.UseVisualStyleBackColor = true;
-            btnReporteEdadAsc.Click += btnReporteEdadAsc_Click;
+            btnReportePromedio.Location = new Point(959, 173);
+            btnReportePromedio.Name = "btnReportePromedio";
+            btnReportePromedio.Size = new Size(110, 54);
+            btnReportePromedio.TabIndex = 49;
+            btnReportePromedio.Text = "Generar Reporte por promedio";
+            btnReportePromedio.UseVisualStyleBackColor = true;
+            btnReportePromedio.Click += btnReportePromedio_Click;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1284, 532);
-            Controls.Add(btnReporteEdadAsc);
-            Controls.Add(btnReporteEdadDesc);
+            Controls.Add(btnReportePromedio);
+            Controls.Add(btnReporteEdad);
             Controls.Add(cmbReporte);
             Controls.Add(label17);
             Controls.Add(label16);
@@ -572,7 +572,7 @@
         private Label label16;
         private Label label17;
         private ComboBox cmbReporte;
-        private Button btnReporteEdadDesc;
-        private Button btnReporteEdadAsc;
+        private Button btnReporteEdad;
+        private Button btnReportePromedio;
     }
 }

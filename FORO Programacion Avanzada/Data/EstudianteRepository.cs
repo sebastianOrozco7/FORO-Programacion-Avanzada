@@ -160,43 +160,6 @@ namespace FORO_Programacion_Avanzada.Data
 
 
    
-        public void GenerarReporte()
-        {
-            try
-            {
-                string Query = "SELECT " +
-                               "Nombre, " +
-                               "(Nota1 + Nota2 + Nota3) / 3.0 AS Promedio, " +
-                               "CASE " +
-                               "WHEN (Nota1 + Nota2 + Nota3) / 3.0 >= 3.0 THEN 'Aprobado' " +
-                               "ELSE 'Reprobado' " +
-                               "END AS Estado " +
-                               "FROM Estudiante;";
-
-                using (MySqlConnection conexion = Conexion.GetConnectionWithRetry())
-                {
-                    using(MySqlCommand cmd = new MySqlCommand(Query, conexion))
-                    {
-                        using (MySqlDataReader reader = cmd.ExecuteReader())
-                        {
-                            string Reporte = "REPORTE DE ESTUDIANTES:\n ";
-
-                            while(reader.Read())
-                            {
-                                Reporte += $"Nombre: {reader["Nombre"]}, Promedio: {reader["Promedio"]}, Estado: {reader["Estado"]}\n";
-
-                            }
-                            MessageBox.Show(Reporte);
-                        }
-                    }
-                }
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show($"ERROR EN REPORTE: {ex.Message}");
-            }
-        }
-
         public DataTable ReportePorGenero(string generoFiltro = null)
         {
             DataTable tabla = new DataTable();
@@ -248,17 +211,19 @@ namespace FORO_Programacion_Avanzada.Data
             }
             return tabla;
         }
-        public DataTable ReportePorEdadaAsc()
+        public DataTable ReportePorPromedio()
         {
             DataTable tabla = new DataTable();
 
             using (MySqlConnection conn = Conexion.GetConnectionWithRetry())
             {
                 string query = @"
-                                SELECT IdEstudiante, Nombre, Genero, Edad,
-                                       (Nota1 + Nota2 + Nota3)/3 AS Promedio
+                                SELECT 
+                                    IdEstudiante,
+                                    Nombre,
+                                    ROUND((Nota1 + Nota2 + Nota3) / 3, 2) AS Promedio
                                 FROM Estudiante
-                                ORDER BY Edad ASC;";
+                                ORDER BY Promedio DESC;";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {

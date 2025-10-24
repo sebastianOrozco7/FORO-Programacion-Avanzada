@@ -351,9 +351,9 @@ namespace FORO_Programacion_Avanzada
             dtgvReporteAvanzado.DataSource = ReporteEdad;
         }
 
-        private void btnReporteEdadAsc_Click(object sender, EventArgs e)
+        private void btnReportePromedio_Click(object sender, EventArgs e)
         {
-            var ReporteEdad = estudianteRepository.ReportePorEdadaAsc();
+            var ReporteEdad = estudianteRepository.ReportePorPromedio();
             dtgvReporteAvanzado.DataSource = ReporteEdad;
         }
     }
