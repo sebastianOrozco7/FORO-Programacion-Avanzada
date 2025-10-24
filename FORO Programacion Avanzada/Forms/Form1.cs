@@ -42,7 +42,7 @@ namespace FORO_Programacion_Avanzada
             dtgvEstudiantes.DataSource = listaAdaptada;
 
             var ListaEstudiantesActividades = actividadRepository.ObtenerInfoEstudianteActividad();
-            dtgvEstudianteActividad.DataSource = ListaEstudiantesActividades;
+
 
             var listaActividades = actividadRepository.ObtenerActividades();
 
@@ -64,6 +64,7 @@ namespace FORO_Programacion_Avanzada
             txbNota3.Clear();
             txbNombreFiltro.Clear();
             cmbFiltro.SelectedIndex = -1;
+            cmbReporte.SelectedIndex = -1;
             rbMasculino.Checked = false;
             rbFemenino.Checked = false;
         }
@@ -128,7 +129,7 @@ namespace FORO_Programacion_Avanzada
             }
 
         }
-     
+
 
         private void PromedioEstado(Estudiante estudiante)
         {
@@ -303,7 +304,14 @@ namespace FORO_Programacion_Avanzada
 
         private void btnReporte_Click(object sender, EventArgs e)
         {
-            estudianteRepository.GenerarReporte();
+            string Genero = cmbReporte.SelectedItem?.ToString();
+
+
+            var ReporteAvanzado = estudianteRepository.ReportePorGenero(Genero);
+
+            dtgvReporteAvanzado.DataSource = ReporteAvanzado;
+
+            LimpiarFormulario();
         }
 
         private void btnFiltrar_Click(object sender, EventArgs e)
@@ -335,6 +343,18 @@ namespace FORO_Programacion_Avanzada
         private void btnRestablecer_Click(object sender, EventArgs e)
         {
             CargarDatos();
+        }
+
+        private void btnReporteEdad_Click(object sender, EventArgs e)
+        {
+            var ReporteEdad = estudianteRepository.ReportePorEdadDesc();
+            dtgvReporteAvanzado.DataSource = ReporteEdad;
+        }
+
+        private void btnReporteEdadAsc_Click(object sender, EventArgs e)
+        {
+            var ReporteEdad = estudianteRepository.ReportePorEdadaAsc();
+            dtgvReporteAvanzado.DataSource = ReporteEdad;
         }
     }
 }

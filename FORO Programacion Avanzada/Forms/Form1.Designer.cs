@@ -56,7 +56,6 @@
             chlActividades = new CheckedListBox();
             txbCedula = new TextBox();
             label11 = new Label();
-            dtgvEstudianteActividad = new DataGridView();
             btnEditar = new Button();
             btnReporte = new Button();
             label12 = new Label();
@@ -64,10 +63,19 @@
             txbNombreFiltro = new TextBox();
             btnFiltrar = new Button();
             btnRestablecer = new Button();
+            label13 = new Label();
+            label14 = new Label();
+            dtgvReporteAvanzado = new DataGridView();
+            label15 = new Label();
+            label16 = new Label();
+            label17 = new Label();
+            cmbReporte = new ComboBox();
+            btnReporteEdadDesc = new Button();
+            btnReporteEdadAsc = new Button();
             ((System.ComponentModel.ISupportInitialize)dtgvEstudiantes).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pbImagen).BeginInit();
             menuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dtgvEstudianteActividad).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dtgvReporteAvanzado).BeginInit();
             SuspendLayout();
             // 
             // label1
@@ -268,7 +276,7 @@
             menuStrip1.Items.AddRange(new ToolStripItem[] { cORREOToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(965, 24);
+            menuStrip1.Size = new Size(1284, 24);
             menuStrip1.TabIndex = 28;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -313,14 +321,6 @@
             label11.TabIndex = 32;
             label11.Text = "Cedula";
             // 
-            // dtgvEstudianteActividad
-            // 
-            dtgvEstudianteActividad.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dtgvEstudianteActividad.Location = new Point(381, 279);
-            dtgvEstudianteActividad.Name = "dtgvEstudianteActividad";
-            dtgvEstudianteActividad.Size = new Size(252, 79);
-            dtgvEstudianteActividad.TabIndex = 33;
-            // 
             // btnEditar
             // 
             btnEditar.Location = new Point(210, 470);
@@ -333,18 +333,18 @@
             // 
             // btnReporte
             // 
-            btnReporte.Location = new Point(652, 296);
+            btnReporte.Location = new Point(1031, 111);
             btnReporte.Name = "btnReporte";
-            btnReporte.Size = new Size(75, 23);
+            btnReporte.Size = new Size(149, 25);
             btnReporte.TabIndex = 35;
-            btnReporte.Text = "Reporte";
+            btnReporte.Text = "Generar Reporte";
             btnReporte.UseVisualStyleBackColor = true;
             btnReporte.Click += btnReporte_Click;
             // 
             // label12
             // 
             label12.AutoSize = true;
-            label12.Location = new Point(835, 68);
+            label12.Location = new Point(468, 330);
             label12.Name = "label12";
             label12.Size = new Size(49, 15);
             label12.TabIndex = 36;
@@ -354,21 +354,21 @@
             // 
             cmbFiltro.FormattingEnabled = true;
             cmbFiltro.Items.AddRange(new object[] { "Masculino", "Femenino", "Todos" });
-            cmbFiltro.Location = new Point(797, 116);
+            cmbFiltro.Location = new Point(433, 396);
             cmbFiltro.Name = "cmbFiltro";
             cmbFiltro.Size = new Size(121, 23);
             cmbFiltro.TabIndex = 37;
             // 
             // txbNombreFiltro
             // 
-            txbNombreFiltro.Location = new Point(797, 176);
+            txbNombreFiltro.Location = new Point(433, 362);
             txbNombreFiltro.Name = "txbNombreFiltro";
             txbNombreFiltro.Size = new Size(138, 23);
             txbNombreFiltro.TabIndex = 38;
             // 
             // btnFiltrar
             // 
-            btnFiltrar.Location = new Point(822, 241);
+            btnFiltrar.Location = new Point(457, 434);
             btnFiltrar.Name = "btnFiltrar";
             btnFiltrar.Size = new Size(75, 23);
             btnFiltrar.TabIndex = 39;
@@ -378,7 +378,7 @@
             // 
             // btnRestablecer
             // 
-            btnRestablecer.Location = new Point(822, 270);
+            btnRestablecer.Location = new Point(300, 279);
             btnRestablecer.Name = "btnRestablecer";
             btnRestablecer.Size = new Size(75, 23);
             btnRestablecer.TabIndex = 40;
@@ -386,11 +386,102 @@
             btnRestablecer.UseVisualStyleBackColor = true;
             btnRestablecer.Click += btnRestablecer_Click;
             // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.Location = new Point(376, 404);
+            label13.Name = "label13";
+            label13.Size = new Size(45, 15);
+            label13.TabIndex = 41;
+            label13.Text = "Genero";
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Location = new Point(376, 370);
+            label14.Name = "label14";
+            label14.Size = new Size(51, 15);
+            label14.TabIndex = 42;
+            label14.Text = "Nombre";
+            // 
+            // dtgvReporteAvanzado
+            // 
+            dtgvReporteAvanzado.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dtgvReporteAvanzado.Location = new Point(797, 233);
+            dtgvReporteAvanzado.Name = "dtgvReporteAvanzado";
+            dtgvReporteAvanzado.Size = new Size(441, 242);
+            dtgvReporteAvanzado.TabIndex = 43;
+            // 
+            // label15
+            // 
+            label15.AutoSize = true;
+            label15.Location = new Point(0, 0);
+            label15.Name = "label15";
+            label15.Size = new Size(44, 15);
+            label15.TabIndex = 44;
+            label15.Text = "label15";
+            // 
+            // label16
+            // 
+            label16.AutoSize = true;
+            label16.Location = new Point(912, 56);
+            label16.Name = "label16";
+            label16.Size = new Size(132, 15);
+            label16.TabIndex = 45;
+            label16.Text = "SECCION DE REPORTES ";
+            // 
+            // label17
+            // 
+            label17.AutoSize = true;
+            label17.Location = new Point(822, 114);
+            label17.Name = "label17";
+            label17.Size = new Size(52, 15);
+            label17.TabIndex = 46;
+            label17.Text = "GENERO";
+            // 
+            // cmbReporte
+            // 
+            cmbReporte.FormattingEnabled = true;
+            cmbReporte.Items.AddRange(new object[] { "Masculino", "Femenino" });
+            cmbReporte.Location = new Point(892, 111);
+            cmbReporte.Name = "cmbReporte";
+            cmbReporte.Size = new Size(121, 23);
+            cmbReporte.TabIndex = 47;
+            // 
+            // btnReporteEdadDesc
+            // 
+            btnReporteEdadDesc.Location = new Point(799, 173);
+            btnReporteEdadDesc.Name = "btnReporteEdadDesc";
+            btnReporteEdadDesc.Size = new Size(110, 54);
+            btnReporteEdadDesc.TabIndex = 48;
+            btnReporteEdadDesc.Text = "Generar Reporte por edad Descendente";
+            btnReporteEdadDesc.UseVisualStyleBackColor = true;
+            btnReporteEdadDesc.Click += btnReporteEdad_Click;
+            // 
+            // btnReporteEdadAsc
+            // 
+            btnReporteEdadAsc.Location = new Point(959, 173);
+            btnReporteEdadAsc.Name = "btnReporteEdadAsc";
+            btnReporteEdadAsc.Size = new Size(110, 54);
+            btnReporteEdadAsc.TabIndex = 49;
+            btnReporteEdadAsc.Text = "Generar Reporte por edad Ascendente";
+            btnReporteEdadAsc.UseVisualStyleBackColor = true;
+            btnReporteEdadAsc.Click += btnReporteEdadAsc_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(965, 532);
+            ClientSize = new Size(1284, 532);
+            Controls.Add(btnReporteEdadAsc);
+            Controls.Add(btnReporteEdadDesc);
+            Controls.Add(cmbReporte);
+            Controls.Add(label17);
+            Controls.Add(label16);
+            Controls.Add(label15);
+            Controls.Add(dtgvReporteAvanzado);
+            Controls.Add(label14);
+            Controls.Add(label13);
             Controls.Add(btnRestablecer);
             Controls.Add(btnFiltrar);
             Controls.Add(txbNombreFiltro);
@@ -398,7 +489,6 @@
             Controls.Add(label12);
             Controls.Add(btnReporte);
             Controls.Add(btnEditar);
-            Controls.Add(dtgvEstudianteActividad);
             Controls.Add(label11);
             Controls.Add(txbCedula);
             Controls.Add(chlActividades);
@@ -433,7 +523,7 @@
             ((System.ComponentModel.ISupportInitialize)pbImagen).EndInit();
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dtgvEstudianteActividad).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dtgvReporteAvanzado).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -468,7 +558,6 @@
         private CheckedListBox chlActividades;
         private TextBox txbCedula;
         private Label label11;
-        private DataGridView dtgvEstudianteActividad;
         private Button btnEditar;
         private Button btnReporte;
         private Label label12;
@@ -476,5 +565,14 @@
         private TextBox txbNombreFiltro;
         private Button btnFiltrar;
         private Button btnRestablecer;
+        private Label label13;
+        private Label label14;
+        private DataGridView dtgvReporteAvanzado;
+        private Label label15;
+        private Label label16;
+        private Label label17;
+        private ComboBox cmbReporte;
+        private Button btnReporteEdadDesc;
+        private Button btnReporteEdadAsc;
     }
 }

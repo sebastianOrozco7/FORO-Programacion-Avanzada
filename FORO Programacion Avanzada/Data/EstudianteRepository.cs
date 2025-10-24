@@ -197,6 +197,81 @@ namespace FORO_Programacion_Avanzada.Data
             }
         }
 
+        public DataTable ReportePorGenero(string generoFiltro = null)
+        {
+            DataTable tabla = new DataTable();
+            using (MySqlConnection conn = Conexion.GetConnectionWithRetry())
+            {
+                string query = @"
+                                SELECT 
+                                    e.Genero, 
+                                    COUNT(e.IdEstudiante) AS TotalEstudiantes,
+                                    AVG((e.Nota1 + e.Nota2 + e.Nota3)/3.0) AS PromedioGeneral,
+                                    SUM(CASE WHEN (e.Nota1 + e.Nota2 + e.Nota3)/3.0 >= 3.0 THEN 1 ELSE 0 END) AS Aprobados
+                                FROM Estudiante e
+                                LEFT JOIN EstudianteActividad ea ON e.IdEstudiante = ea.IdEstudiante
+                                WHERE (@Genero IS NULL OR e.Genero = @Genero)
+                                GROUP BY e.Genero;";
+
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Genero", string.IsNullOrEmpty(generoFiltro) ? DBNull.Value : generoFiltro);
+
+                    using (MySqlDataAdapter adapter = new MySqlDataAdapter(cmd))
+                    {
+                        adapter.Fill(tabla);
+                    }
+                }
+            }
+            return tabla;
+        }
+
+        public DataTable ReportePorEdadDesc()
+        {
+            DataTable tabla = new DataTable();
+
+            using(MySqlConnection conn = Conexion.GetConnectionWithRetry())
+            {
+                string query = @"
+                                SELECT IdEstudiante, Nombre, Genero, Edad,
+                                       (Nota1 + Nota2 + Nota3)/3 AS Promedio
+                                FROM Estudiante
+                                ORDER BY Edad DESC;";
+
+               using(MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    using(MySqlDataAdapter adapter = new MySqlDataAdapter(cmd))
+                    {
+                        adapter.Fill(tabla);
+                    }
+                }
+            }
+            return tabla;
+        }
+        public DataTable ReportePorEdadaAsc()
+        {
+            DataTable tabla = new DataTable();
+
+            using (MySqlConnection conn = Conexion.GetConnectionWithRetry())
+            {
+                string query = @"
+                                SELECT IdEstudiante, Nombre, Genero, Edad,
+                                       (Nota1 + Nota2 + Nota3)/3 AS Promedio
+                                FROM Estudiante
+                                ORDER BY Edad ASC;";
+
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    using (MySqlDataAdapter adapter = new MySqlDataAdapter(cmd))
+                    {
+                        adapter.Fill(tabla);
+                    }
+                }
+            }
+            return tabla;
+        }
+
+
         public List<Estudiante> FiltrarEstudiantes(string Nombre, string Genero)
         {
             var estudiantes = new List<Estudiante>();
