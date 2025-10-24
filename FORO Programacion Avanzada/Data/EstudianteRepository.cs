@@ -3,6 +3,7 @@ using MySql.Data.MySqlClient;
 using MySqlX.XDevAPI;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -13,39 +14,27 @@ namespace FORO_Programacion_Avanzada.Data
 {
     internal class EstudianteRepository
     {
-        public void RegistrarEstudiante(Estudiante estudiante)
+        //metodo para registrar estudiantes y sus actividades mediante un procedimiento almacenado
+        public void RegistrarEstudianteConActividades(Estudiante estudiante, string actividades)
         {
-            string Query = "INSERT INTO Estudiante(IdEstudiante,Nombre,Genero,Edad,Nota1,Nota2,Nota3)" +
-                            "VALUES (@IdEstudiante,@Nombre,@Genero,@Edad,@Nota1,@Nota2,@Nota3)";
-
-            try
+            using (MySqlConnection conexion = Conexion.GetConnectionWithRetry())
             {
-                using (MySqlConnection conexion = Conexion.GetConnectionWithRetry())
+                using (MySqlCommand cmd = new MySqlCommand("sp_InsertEstudiante", conexion))
                 {
-                    
+                    cmd.CommandType = CommandType.StoredProcedure;
 
-                    using (MySqlCommand cmd = new MySqlCommand(Query, conexion))
-                    {
-                        cmd.Parameters.AddWithValue("@IdEstudiante", estudiante.IdEstudiante);
-                        cmd.Parameters.AddWithValue("@Nombre", estudiante.Nombre);
-                        cmd.Parameters.AddWithValue("@Genero", estudiante.Genero);
-                        cmd.Parameters.AddWithValue("@Edad", estudiante.Edad);
-                        cmd.Parameters.AddWithValue("@Nota1", estudiante.Nota1);
-                        cmd.Parameters.AddWithValue("@Nota2", estudiante.Nota2);
-                        cmd.Parameters.AddWithValue("@Nota3", estudiante.Nota3);
+                    cmd.Parameters.AddWithValue("@p_IdEstudiante", estudiante.IdEstudiante);
+                    cmd.Parameters.AddWithValue("@p_Nombre", estudiante.Nombre);
+                    cmd.Parameters.AddWithValue("@p_Genero", estudiante.Genero);
+                    cmd.Parameters.AddWithValue("@p_Edad", estudiante.Edad);
+                    cmd.Parameters.AddWithValue("@p_Nota1", estudiante.Nota1);
+                    cmd.Parameters.AddWithValue("@p_Nota2", estudiante.Nota2);
+                    cmd.Parameters.AddWithValue("@p_Nota3", estudiante.Nota3);
+                    cmd.Parameters.AddWithValue("@p_Actividades", actividades); 
 
-                        cmd.ExecuteNonQuery();
-                    }
+                    cmd.ExecuteNonQuery();
                 }
             }
-            catch (Exception ex)
-            {
-                // Guardamos el error en el log
-                Logger.LogError($"Error al registrar estudiante {estudiante.Nombre}: {ex.Message}");
-                // Lanza la excepción nuevamente si quieres mostrar mensaje al usuario
-                throw;
-            }
-
         }
 
         public List<Estudiante> ObtenerEstudiantes()
@@ -117,26 +106,24 @@ namespace FORO_Programacion_Avanzada.Data
             return estudiantesDict.Values.ToList();
         }
 
-
+        //metodo para editar estudiantes y sus actividades mediante un procedimiento almacenado
         public void editarEstudiante(Estudiante estudiante, int Id)
         {
-            string Query = "UPDATE Estudiante SET Nombre = @Nombre, Genero = @Genero, Edad = @Edad," +
-                            "Nota1 = @Nota1, Nota2 = @Nota2, Nota3 = @Nota3 WHERE IdEstudiante = @IdEstudiante";
-
             try
             {
                 using (MySqlConnection conexion = Conexion.GetConnectionWithRetry())
                 {
-
-                    using (MySqlCommand cmd = new MySqlCommand(Query, conexion))
+                    using (MySqlCommand cmd = new MySqlCommand("sp_UpdateEstudiante", conexion))
                     {
-                        cmd.Parameters.AddWithValue("@Nombre", estudiante.Nombre);
-                        cmd.Parameters.AddWithValue("@Genero", estudiante.Genero);
-                        cmd.Parameters.AddWithValue("@Edad", estudiante.Edad);
-                        cmd.Parameters.AddWithValue("@Nota1", estudiante.Nota1);
-                        cmd.Parameters.AddWithValue("@Nota2", estudiante.Nota2);
-                        cmd.Parameters.AddWithValue("@Nota3", estudiante.Nota3);
-                        cmd.Parameters.AddWithValue("@IdEstudiante", estudiante.IdEstudiante);
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.AddWithValue("p_IdEstudiante", estudiante.IdEstudiante);
+                        cmd.Parameters.AddWithValue("p_Nombre", estudiante.Nombre);
+                        cmd.Parameters.AddWithValue("p_Genero", estudiante.Genero);
+                        cmd.Parameters.AddWithValue("p_Edad", estudiante.Edad);
+                        cmd.Parameters.AddWithValue("p_Nota1", estudiante.Nota1);
+                        cmd.Parameters.AddWithValue("p_Nota2", estudiante.Nota2);
+                        cmd.Parameters.AddWithValue("p_Nota3", estudiante.Nota3);
 
                         cmd.ExecuteNonQuery();
                     }
@@ -144,43 +131,35 @@ namespace FORO_Programacion_Avanzada.Data
             }
             catch (Exception ex)
             {
-                // Guardamos el error en el log
                 Logger.LogError($"Error al actualizar estudiante {estudiante.Nombre}: {ex.Message}");
-                // Lanza la excepción nuevamente si quieres mostrar mensaje al usuario
                 throw;
             }
         }
 
+        //metodo para eliminar estudiantes y sus actividades mediante un procedimiento almacenado
         public void EliminarEstudiante(int IdEstudiante)
         {
-            string Query = "DELETE FROM Estudiante WHERE IdEstudiante = @IdEstudiante";
-
             try
             {
-
-                //primero necesitamos eliminar la relacion porque si no nos dara error asi que llamamos el metodo que borra EstudianteActividad
-                ActividadExtraRepository actividadExtra = new ActividadExtraRepository();
-                actividadExtra.EliminarEstudianteActividad(IdEstudiante);
-
                 using (MySqlConnection conexion = Conexion.GetConnectionWithRetry())
                 {
-
-                    using (MySqlCommand cmd = new MySqlCommand(Query, conexion))
+                    using (MySqlCommand cmd = new MySqlCommand("sp_DeleteEstudiante", conexion))
                     {
-                        cmd.Parameters.AddWithValue("@IdEstudiante", IdEstudiante);
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@p_IdEstudiante", IdEstudiante);
                         cmd.ExecuteNonQuery();
                     }
                 }
             }
             catch (Exception ex)
             {
-                // Guardamos el error en el log
                 Logger.LogError($"Error al eliminar estudiante con el id {IdEstudiante}: {ex.Message}");
-                // Lanza la excepción nuevamente si quieres mostrar mensaje al usuario
                 throw;
             }
         }
 
+
+   
         public void GenerarReporte()
         {
             try

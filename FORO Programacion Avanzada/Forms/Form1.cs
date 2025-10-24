@@ -96,7 +96,7 @@ namespace FORO_Programacion_Avanzada
         {
             try
             {
-                if (ValidarDatos() == true)
+                if (ValidarDatos())
                 {
                     Estudiante nuevo = new Estudiante
                     {
@@ -109,26 +109,22 @@ namespace FORO_Programacion_Avanzada
                         Genero = rbMasculino.Checked ? "Masculino" : "Femenino"
                     };
 
-                    estudianteRepository.RegistrarEstudiante(nuevo);
+                    // Construir cadena "1;2;3"
+                    string actividades = string.Join(";", chlActividades.CheckedItems
+                        .Cast<Actividades_Extracurriculares>()
+                        .Select(a => a.IdActividad));
 
+                    estudianteRepository.RegistrarEstudianteConActividades(nuevo, actividades);
+                    PromedioEstado(nuevo);
 
-
-                    foreach (Actividades_Extracurriculares actividad in chlActividades.CheckedItems)
-                    {
-                        int idActividad = actividad.IdActividad;
-
-                        actividadRepository.RegistrarEstudianteActividad(nuevo.IdEstudiante, idActividad);
-                    }
-
-                    MessageBox.Show("Registro completo: ", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                    MessageBox.Show("Registro completo", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     CargarDatos();
                     LimpiarFormulario();
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al registrar: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error: " + ex.Message);
             }
 
         }
@@ -141,12 +137,14 @@ namespace FORO_Programacion_Avanzada
             if (promedio >= 3)
             {
                 lbEstado.Text = "Aprobado";
+                lbPromedio.Text = promedio.ToString();
                 pbImagen.Image = Image.FromFile(@"Imagenes\Aprobado.png");
                 pbImagen.SizeMode = PictureBoxSizeMode.Zoom;
             }
             else
             {
                 lbEstado.Text = "Reprobado";
+                lbPromedio.Text = promedio.ToString();
                 pbImagen.Image = Image.FromFile(@"Imagenes\Reprobado.png");
                 pbImagen.SizeMode = PictureBoxSizeMode.Zoom;
             }
