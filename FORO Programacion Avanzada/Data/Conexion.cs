@@ -17,6 +17,14 @@ namespace FORO_Programacion_Avanzada.Data
         {
             string ambiente = ConfigurationManager.AppSettings["Ambiente"];
             string nombreConexion = ambiente == "Remoto" ? "RemoteConnection" : "LocalConnection";
+
+            // Si el ambiente es remoto y existe el archivo encriptado, lo usamos
+            if (ambiente == "Remoto" && File.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "conn.enc")))
+            {
+                return ConexionProtegida.ReadDecryptedConnectionString();
+            }
+
+            // si no usa la conexión normal desde App.config
             return ConfigurationManager.ConnectionStrings[nombreConexion].ConnectionString;
         }
 
